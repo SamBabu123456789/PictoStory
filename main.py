@@ -1,5 +1,6 @@
 import requests
 import re
+import json
 
 API_KEY = "AIzaSyDIZukfnO2QBnGwHnyebJbSRVnitlxnI3Y"
 API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent"
@@ -35,7 +36,7 @@ def ask_gemini(prompt, top_p=0.8, temperature=0.7, top_k=40):
         response_text = ""
     response_tokens = count_tokens(response_text)
     print(f"Prompt tokens: {prompt_tokens}, Response tokens: {response_tokens}, Total: {prompt_tokens + response_tokens}")
-    return result
+    return response_text
 
 if __name__ == "__main__":
     # Dynamic prompting: build prompt based on user input
@@ -43,13 +44,25 @@ if __name__ == "__main__":
     text = input("Enter the text: ").strip()
 
     if task == "summarize":
-        user_prompt = f"Summarize the following text in one sentence: {text}"
+        user_prompt = (
+            f"Summarize the following text in one sentence and return the result as JSON with a 'summary' key. "
+            f"Text: {text}"
+        )
     elif task == "translate":
         lang = input("Translate to which language?: ").strip()
-        user_prompt = f"Translate the following text to {lang}: {text}"
+        user_prompt = (
+            f"Translate the following text to {lang} and return the result as JSON with a 'translation' key. "
+            f"Text: {text}"
+        )
     else:
         user_prompt = text  # fallback: just send the text
 
     # Set Top P, Temperature, and Top K values for generation
-    result = ask_gemini(user_prompt, top_p=0.8, temperature=0.7, top_k=40)
-    print(result)
+    response_text = ask_gemini(user_prompt, top_p=0.8, temperature=0.7, top_k=40)
+    print("Raw model output:", response_text)
+    # Try to parse structured output
+    try:
+        structured = json.loads(response_text)
+        print("Structured output:", structured)
+    except Exception:
+        print("Could not parse structured output.")
