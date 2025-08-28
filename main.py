@@ -17,7 +17,17 @@ def ask_gemini(prompt):
     return response.json()
 
 if __name__ == "__main__":
-    # Zero-shot prompt: ask Gemini to summarize text
-    user_prompt = "Summarize the following text in one sentence: Artificial Intelligence is transforming the world by enabling machines to learn from data and make decisions."
+    # Dynamic prompting: build prompt based on user input
+    task = input("What do you want to do? (summarize/translate): ").strip().lower()
+    text = input("Enter the text: ").strip()
+
+    if task == "summarize":
+        user_prompt = f"Summarize the following text in one sentence: {text}"
+    elif task == "translate":
+        lang = input("Translate to which language?: ").strip()
+        user_prompt = f"Translate the following text to {lang}: {text}"
+    else:
+        user_prompt = text  # fallback: just send the text
+
     result = ask_gemini(user_prompt)
     print(result)
