@@ -1,6 +1,5 @@
 **PictoStory - Image-to-Story Generator**
 Image-to-Story Generator is an AI-powered tool that transforms images into short, creative stories. Simply upload a picture, and the app will analyze it, extract key elements, and weave them into a narrative across genres like fantasy, sci-fi, mystery, or slice-of-life.
-
 This project is designed for storytellers, educators, game designers, and anyone who loves blending visuals with words.
 
 **Key Features**
