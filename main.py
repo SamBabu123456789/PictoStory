@@ -39,6 +39,17 @@ def ask_gemini(prompt, top_p=0.8, temperature=0.7, top_k=40):
     return response_text
 
 if __name__ == "__main__":
+
+    # One-shot prompt: provide an example summary, then a new task
+    user_prompt = (
+        "Summarize the following text in one sentence.\n"
+        "Example:\n"
+        "Text: The sun is the center of our solar system and provides the energy necessary for life on Earth.\n"
+        "Summary: The sun is vital for life on Earth as the solar system's center.\n"
+        "Now summarize this text:\n"
+        "Text: Artificial Intelligence is transforming the world by enabling machines to learn from data and make decisions.\n"
+        "Summary:"
+    )
     # Dynamic prompting: build prompt based on user input
     task = input("What do you want to do? (summarize/translate): ").strip().lower()
     text = input("Enter the text: ").strip()
@@ -66,3 +77,4 @@ if __name__ == "__main__":
         print("Structured output:", structured)
     except Exception:
         print("Could not parse structured output.")
+
