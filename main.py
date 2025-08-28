@@ -9,7 +9,7 @@ def count_tokens(text):
     tokens = re.findall(r"\w+|[^\w\s]", text, re.UNICODE)
     return len(tokens)
 
-def ask_gemini(prompt):
+def ask_gemini(prompt, top_p=0.8):
     headers = {
         "Content-Type": "application/json",
         "Authorization": f"Bearer {API_KEY}"
@@ -17,7 +17,10 @@ def ask_gemini(prompt):
     data = {
         "contents": [
             {"parts": [{"text": prompt}]}
-        ]
+        ],
+        "generationConfig": {
+            "topP": top_p
+        }
     }
     response = requests.post(API_URL, headers=headers, json=data)
     result = response.json()
@@ -45,5 +48,6 @@ if __name__ == "__main__":
     else:
         user_prompt = text  # fallback: just send the text
 
-    result = ask_gemini(user_prompt)
+    # Set Top P value for generation
+    result = ask_gemini(user_prompt, top_p=0.8)
     print(result)
