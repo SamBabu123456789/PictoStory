@@ -17,7 +17,13 @@ def ask_gemini(prompt):
     return response.json()
 
 if __name__ == "__main__":
-    # Zero-shot prompt: ask Gemini to summarize text
-    user_prompt = "Summarize the following text in one sentence: Artificial Intelligence is transforming the world by enabling machines to learn from data and make decisions."
-    result = ask_gemini(user_prompt)
-    print(result)
+    # One-shot prompt: provide an example summary, then a new task
+    user_prompt = (
+        "Summarize the following text in one sentence.\n"
+        "Example:\n"
+        "Text: The sun is the center of our solar system and provides the energy necessary for life on Earth.\n"
+        "Summary: The sun is vital for life on Earth as the solar system's center.\n"
+        "Now summarize this text:\n"
+        "Text: Artificial Intelligence is transforming the world by enabling machines to learn from data and make decisions.\n"
+        "Summary:"
+    )
